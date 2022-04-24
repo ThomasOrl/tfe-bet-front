@@ -20,14 +20,20 @@ function DisplayFixtures () {
   },[])
   
   return (
-  <div>
-    <ul>
-
-      {fixtures.map((item,i)=>(
-        <li key={i}>{item.teams.home.name}<br/>{item.teams.away.name}</li>
-      ))}
+  <div className='listNomEquipes'>
+    
+      <div className='nomEquipeHome'>
+        {fixtures.map((item,i)=>(
+          <p key={i}>{item.teams.home.name}</p>
+        ))}
+      </div>
       
-    </ul>
+      <div className='nomEquipeAway'>
+        {fixtures.map((item,j)=>(
+          <p key={j}>{item.teams.away.name}</p>
+        ))}
+      </div>
+      
   </div>
   );
 }

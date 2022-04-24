@@ -1,20 +1,24 @@
-import './App.css';
-import DisplayFixtures from './Services/DisplayFixtures';
+import React from 'react';
+import { BrowserRouter as Router, Route ,Routes } from 'react-router-dom';
 
-
+import Home from './components/frontend/Home';
+import Login from './components/frontend/auth/Login';
+import Register from './components/frontend/auth/Register';
 
 function App() {
   
-  // displayFixtures();
-  
- 
   return (
     <div className="App">
-      <h1> Page App accueil</h1>
-      <nav></nav>
-      <DisplayFixtures/>
-      
+      <Router>
+        <Routes>
 
+          <Route exact path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+
+        </Routes>
+      </Router>
+       
     </div>
   );
 }
