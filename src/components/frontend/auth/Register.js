@@ -57,17 +57,17 @@ function Register(){
                                 <form onSubmit={registerSubmit}>
                                     <div className="form-group mb-3">
                                         <label>Name</label>
-                                        <input type="" name="name" value={registerInput.name} onChange={handleInput}  className="form-control"  />
+                                        <input type="text" name="name" value={registerInput.name} onChange={handleInput}  className="form-control"  />
                                         <span className="text-danger">{registerInput.error_list.name}</span>
                                     </div>
                                     <div className="form-group mb-3">
                                         <label>Email</label>
-                                        <input type="" name="email" value={registerInput.email} onChange={handleInput}  className="form-control" />
+                                        <input type="email" name="email" value={registerInput.email} onChange={handleInput}  className="form-control" />
                                         <span className="text-danger">{registerInput.error_list.email}</span>
                                     </div>
                                     <div className="form-group mb-3">
                                         <label>Password</label>
-                                        <input type="" name="password" value={registerInput.password} onChange={handleInput}  className="form-control"  />
+                                        <input type="password" name="password" value={registerInput.password} onChange={handleInput}  className="form-control"  />
                                         <span className="text-danger">{registerInput.error_list.password}</span>
                                     </div>
                                     <div className="form-group mb-3">
