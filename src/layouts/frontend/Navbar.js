@@ -35,9 +35,16 @@ function Navbar(){
         );
     }else{
         AuthButtons = (
-            <li className="nav-item">
-                <button type="button" onClick={logoutSubmit} className="nav-link btn btn-danger btn-sm text-white" >Logout</button>
-            </li>
+            <ul className="navbar-nav">
+
+                <li className="nav-item">
+                    <button type="" className="nav-link btn text-white" >{localStorage.getItem('auth_name')}</button>
+                </li>
+                <li className="nav-item">
+                    <button type="button" onClick={logoutSubmit} className="nav-link btn btn-danger btn-sm text-white" >Logout</button>
+                </li>
+                
+            </ul>
         );
 
     }

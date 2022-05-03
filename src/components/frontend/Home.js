@@ -1,11 +1,12 @@
 import React from 'react';
 import Navbar from '../../layouts/frontend/Navbar';
+import ViewFixtures from './fixtures/ViewFixtures';
 
 function Home(){
     return(
         <div>
             <Navbar/>
-            <h1>Je suis la page Home</h1>
+            <ViewFixtures/>
         </div>
     )
 }
