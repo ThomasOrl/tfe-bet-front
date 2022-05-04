@@ -5,6 +5,7 @@ import Home from './components/frontend/Home';
 import Login from './components/frontend/auth/Login';
 import Register from './components/frontend/auth/Register';
 import axios from 'axios';
+import ViewProfile from './components/frontend/profile/ViewProfile';
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -30,7 +31,8 @@ function App() {
           <Route path="/login" element={localStorage.getItem('auth_token') ? <Navigate to='/'/> : <Login/>} />
           
           <Route path="/register" element={localStorage.getItem('auth_token') ? <Navigate to='/'/> : <Register/>} />
-            
+          
+          <Route path="/profile" element={<ViewProfile/>}/>
           
         </Routes>
       </Router>

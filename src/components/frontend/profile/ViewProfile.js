@@ -2,32 +2,32 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 
-function ViewFixtures(){
+function ViewProfile(){
     const[loading, setLoading] = useState(true);
-    const[fixturelist, setFixtureList] = useState([]);
+    const[profile, setProfile] = useState([]);
 
     useEffect(()=>{
-        axios.get(`/api/displayfixture`).then(res=>{
-            console.log(res.data.fixture);
+        axios.get(`/api/displayprofile`).then(res=>{
+            console.log(res.data.profile);
             if(res.status === 200)
             {
-                setFixtureList(res.data.fixture)
+                setProfile(res.data.profile)
             }
             setLoading(false);
         });
     },[]);
 
-    var viewfixture_HTMLTABLE ="";
+    var viewprofile_HTMLTABLE ="";
     if(loading){
-        return <h4>Loading matchs...</h4>
+        return <h4>Loading Profile...</h4>
     }else{
-        viewfixture_HTMLTABLE =
-        fixturelist.map((item,i)=>{
+        viewprofile_HTMLTABLE =
+        profile.map((item,i)=>{
             return (
                     <tr key={i}>
-                        <td>{item.equipe_home.name}</td>
-                        <td>{item.equipe_exterieur.name}</td>
-                        <td>{item.dateDebut}</td>
+                        <td>{item.profile.name}</td>
+                        <td>{item.profile.email}</td>
+                        <td>{item.profile.solde}</td>
                     </tr>
             )
         });
@@ -39,12 +39,12 @@ function ViewFixtures(){
             <div className="container px-4">
                 <div className="card mt-4">
                     <div className="card-header">
-                        <h4>Liste Matchs</h4>
+                        <h4>Mon Profil</h4>
                     </div>
                     <div className="card-body">
                         <table className="table table-bordered table-striped">
                             <tbody>
-                                {viewfixture_HTMLTABLE}
+                                {viewprofile_HTMLTABLE}
                             </tbody>
                         </table>
                     </div>
@@ -55,4 +55,4 @@ function ViewFixtures(){
 }
 
 
-export default ViewFixtures;
+export default ViewProfile;

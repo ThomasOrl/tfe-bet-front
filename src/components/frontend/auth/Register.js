@@ -70,9 +70,13 @@ function Register(){
                                         <input type="password" name="password" value={registerInput.password} onChange={handleInput}  className="form-control"  />
                                         <span className="text-danger">{registerInput.error_list.password}</span>
                                     </div>
+                                    <div>
+                                        <p className="text-warning"> * Bonus de 50 € à l'inscription</p>
+                                    </div>
                                     <div className="form-group mb-3">
                                         <button type="submit" className="btn btn-primary">Register</button>
                                     </div>
+                                    
                                 </form>
                             </div>
                         </div>

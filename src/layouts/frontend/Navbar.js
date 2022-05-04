@@ -38,7 +38,7 @@ function Navbar(){
             <ul className="navbar-nav">
 
                 <li className="nav-item">
-                    <button type="" className="nav-link btn text-white" >{localStorage.getItem('auth_name')}</button>
+                    <Link className="nav-link" to='/profile'>{localStorage.getItem('auth_name')}</Link>
                 </li>
                 <li className="nav-item">
                     <button type="button" onClick={logoutSubmit} className="nav-link btn btn-danger btn-sm text-white" >Logout</button>
