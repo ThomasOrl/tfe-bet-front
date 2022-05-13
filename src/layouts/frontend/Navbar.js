@@ -14,7 +14,7 @@ function Navbar(){
             if(res.data.status === 200){
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
-                swal("Succes", res.data.message, "Succes");
+                swal("Succes", res.data.message, "succes");
                 Navigate("/");
             }
 
@@ -53,11 +53,7 @@ function Navbar(){
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow sticky-top">
             <div className="container">
 
-                <Link className="navbar-brand" to="#">BetProject</Link>
-
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                <Link className="navbar-brand" to="/">BetProject</Link>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

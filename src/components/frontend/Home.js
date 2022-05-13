@@ -1,12 +1,16 @@
 import React from 'react';
 import Navbar from '../../layouts/frontend/Navbar';
-import ViewFixtures from './fixtures/ViewFixtures';
+import ViewAllFixtures from './fixtures/ViewAllFixtures';
+
 
 function Home(){
     return(
         <div>
             <Navbar/>
-            <ViewFixtures/>
+            
+            <ViewAllFixtures/>
+            
+            
             
         </div>
     )

@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 
-function ViewFixtures(){
+function ViewAllFixtures(){
+
     const[loading, setLoading] = useState(true);
     const[fixturelist, setFixtureList] = useState([]);
 
     useEffect(()=>{
         axios.get(`/api/displayfixture`).then(res=>{
-            console.log(res.data.fixture);
+            // console.log(res.data.fixture);
             if(res.status === 200)
             {
                 setFixtureList(res.data.fixture)
@@ -16,21 +18,30 @@ function ViewFixtures(){
             setLoading(false);
         });
     },[]);
+    
 
-    var viewfixture_HTMLTABLE ="";
+    var viewallfixture_HTMLTABLE ="";
     if(loading){
         return <h4>Loading matchs...</h4>
     }else{
-        viewfixture_HTMLTABLE =
-        fixturelist.map((item,i)=>{
+        viewallfixture_HTMLTABLE =
+        fixturelist.map((item)=>{
             return (
-                    <tr key={i}>
+            
+                    <tr key={item.id}>
+
+                        <td>
+                            <Link to={`displayonefixture/${item.id}`}className="btn btn-success btn-sm" >Voir Match</Link>
+                        </td> 
                         <td>{item.equipe_home.name}</td>
+                        
                         <td>{item.equipe_exterieur.name}</td>
+                        
                         <td>{item.dateDebut}</td>
-                    </tr>
+
+                    </tr> 
             )
-        });
+        })
     }
 
 
@@ -42,9 +53,10 @@ function ViewFixtures(){
                         <h4>Liste Matchs</h4>
                     </div>
                     <div className="card-body">
-                        <table className="table table-bordered table-striped">
+                        <table className="table table-bordered table-striped text-center">
                             <tbody>
-                                {viewfixture_HTMLTABLE}
+                                
+                                {viewallfixture_HTMLTABLE}
                             </tbody>
                         </table>
                     </div>
@@ -55,4 +67,4 @@ function ViewFixtures(){
 }
 
 
-export default ViewFixtures;
+export default ViewAllFixtures;

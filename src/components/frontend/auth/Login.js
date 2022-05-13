@@ -33,10 +33,10 @@ function Login(){
                 if(res.data.status === 200){
                     localStorage.setItem('auth_token',res.data.token);
                     localStorage.setItem('auth_name',res.data.username);
-                    swal("Succes", res.data.message, "Succes");
+                    swal("Succes", res.data.message, "succes");
                     Navigate("/");
                 }else if(res.data.status === 401){
-                    swal("Warning", res.data.message, "Warning");
+                    swal("Warning", res.data.message, "warning");
                 }else{
                     setLogin({...loginInput, error_list: res.data.validation_errors});
                 }
