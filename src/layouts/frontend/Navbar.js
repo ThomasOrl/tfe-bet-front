@@ -14,7 +14,7 @@ function Navbar(){
             if(res.data.status === 200){
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
-                swal("Succes", res.data.message, "succes");
+                swal("Succes", res.data.message, "success");
                 Navigate("/");
             }
 

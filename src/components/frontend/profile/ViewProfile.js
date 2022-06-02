@@ -33,12 +33,12 @@ function ProfileData(){
             if(res.data.status === 200){
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
-                swal("Succes",res.data.message,"succes");
+                swal("Réussi",res.data.message,"success");
                 
                 Navigate("/");
 
             }else if(res.data.status === 404){
-                swal("Succes",res.data.message,"succes");
+                swal("Réussi",res.data.message,"success");
             }
         });
     }
@@ -57,7 +57,7 @@ function ProfileData(){
                 <td>{profile.email}</td>
                 <td>{profile.solde}</td>
                 <td>
-                    <button type="button" onClick={(e)=> deleteProfile(e, profile.id)} className="btn btn-danger">Delete my Account</button>
+                    <button type="button" onClick={(e)=> deleteProfile(e, profile.id)} className="btn btn-danger">Supprimer mon compte</button>
                 </td>
             </tr>
         ) 
@@ -72,7 +72,7 @@ function ViewProfile(){
             <Navbar/>
             <div className="container px-4">
                 <div className="card mt-4">
-                    <div className="card-header">
+                    <div className="card-header bg-dark text-light">
                         <h4>Mon Profil</h4>
                     </div>
                     <div className="card-body">

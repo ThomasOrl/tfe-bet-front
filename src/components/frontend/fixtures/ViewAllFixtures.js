@@ -31,7 +31,7 @@ function ViewAllFixtures(){
                     <tr key={item.id}>
 
                         <td>
-                            <Link to={`displayonefixture/${item.id}`}className="btn btn-success btn-sm" >Voir Match</Link>
+                            <Link to={`displayonefixture/${item.id}`}className="btn btn-warning btn-sm" >Voir ce Match</Link>
                         </td> 
                         <td>{item.equipe_home.name}</td>
                         

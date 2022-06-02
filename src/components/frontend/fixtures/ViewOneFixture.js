@@ -5,7 +5,6 @@ import Navbar from "../../../layouts/frontend/Navbar";
 
 function ViewOneFixtureData(){
 
-
     const[loading, setLoading] = useState(true);
     const[fixture, setFixture] = useState([]);
     const {id} = useParams();
@@ -21,20 +20,51 @@ function ViewOneFixtureData(){
         });
     },[]);
     
-    // Cotes aleatoires 
+    // Timer 
+    const startCountdown = () =>{
+        let counter = 9;
+        const countDownEl = document.getElementById('counter');   
 
-    let oddsHome = (Math.random() * (3.00 - 1.00 + 1.00) + 1.00).toFixed(2);
-    let oddsAway = (Math.random() * (3.00 - 1.00 + 1.00) + 1.00).toFixed(2);
-
+            const interval = setInterval(() => {
+            // console.log(counter);
+            
+            countDownEl.innerHTML = `Time : ${counter}`;
+            counter--;
+                
+            if (counter < 0 ) {
+                clearInterval(interval);
+                countDownEl.innerHTML = `Time is Over`;
+                // console.log('Stop !');
+            }
+            }, 1000);
+    }
     
+    const addOneGoalHome = ()=>{
+        let addGoalEl = document.getElementById('scoreHome');
+        let scoreHome = addGoalEl.innerHTML;
+        ++ scoreHome;
+
+        document.getElementById('scoreHome').innerHTML = scoreHome;
+    }
+
+    const addOneGoalExt = ()=>{
+        let addGoalEl = document.getElementById('scoreExt');
+        let scoreExt = addGoalEl.innerHTML;
+        ++ scoreExt;
+    
+        document.getElementById('scoreExt').innerHTML = scoreExt;
+    }
+
+
     if(loading){
         return (
-            <tr>
-                <td>Loading Match selected...</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>Loading Match selected...</td>
+                </tr>
+            </tbody>
             )
     }else{
-        
         
         return (
             <tbody>
@@ -47,17 +77,31 @@ function ViewOneFixtureData(){
                 </tr> 
                 <tr>
                     <td>
-                        <button className="btn btn-warning">{oddsHome}</button>
+                        <button className="btn btn-warning">{fixture.cote[0].cote}</button>
                     </td>
                     <td>
-                        <button className="btn btn-warning">{oddsAway}</button>
+                        <button className="btn btn-warning">{fixture.cote[1].cote}</button>
+                    </td>
+                    
+                </tr>
+                <tr className="bg-dark text-light">
+                    <td>Score Home</td>
+                    <td>Score Exterieur</td>
+                </tr>
+                <tr>
+                    <td id="scoreHome">0</td>
+                    <td id="scoreExt">0</td>
+                    <td>
+                        <button id="counter" onClick={startCountdown} className="btn btn-primary">Start</button>
+                        <button onClick={addOneGoalHome} className="btn btn-primary m-1">Score Home +1</button>
+                        <button onClick={addOneGoalExt} className="btn btn-primary m-1">Score Exterieur +1</button>
                     </td>
                 </tr>
             </tbody>    
-        )
-       
+        )  
     }
 }
+
 function ViewOneFixture(){
     return(
         <div>
@@ -69,15 +113,14 @@ function ViewOneFixture(){
                     </div>
                     <div className="card-body">
                         <table className="table table-bordered text-center">
-                            <thead>
+                            <thead className="bg-dark text-light">
                                 <tr>
                                     <td>Equipe Domicile</td>
                                     <td>Equipe Exterieur</td>
                                     <td>Date</td>
                                 </tr>
                             </thead>
-                            
-                                
+
                             <ViewOneFixtureData/>
                             
                         </table>
