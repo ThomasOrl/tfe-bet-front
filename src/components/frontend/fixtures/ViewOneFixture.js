@@ -2,49 +2,59 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../../layouts/frontend/Navbar";
+import Button from "@mui/material";
 
 function ViewOneFixtureData(){
 
-    const[loading, setLoading] = useState(true);
-    const[fixture, setFixture] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [fixture, setFixture] = useState();
+    const [odds, setOdds] = useState();
+    const [startCount, setStartCount] = useState(false)
+    const [seconds, setSeconds] = useState(0);
+    const [disable, setDisable] = useState(true)
+
     const {id} = useParams();
     useEffect(()=>{
         
         axios.get(`/api/displayonefixture/${id}`).then(res=>{
-            console.log(res.data.fixture);
             if(res.status === 200)
             {
                 setFixture(res.data.fixture)
+                setOdds({
+                    home: res.data.fixture.cote[0].cote,
+                    away: res.data.fixture.cote[1].cote,
+                })
             }
             setLoading(false);
         });
     },[]);
-    
-    // Timer 
-    const startCountdown = () =>{
-        let counter = 9;
-        const countDownEl = document.getElementById('counter');   
 
+    // Timer 
+    useEffect(() => {
+        if (startCount){
             const interval = setInterval(() => {
-            // console.log(counter);
-            
-            countDownEl.innerHTML = `Time : ${counter}`;
-            counter--;
-                
-            if (counter < 0 ) {
-                clearInterval(interval);
-                countDownEl.innerHTML = `Time is Over`;
-                // console.log('Stop !');
-            }
-            }, 1000);
-    }
+                setSeconds(seconds =>  seconds + 1)
+                setDisable(false)
+                if (seconds === 9){
+                    setStartCount(false)
+                    setSeconds(0)
+                    setDisable(true)
+                }
+            }, 1000)
+            return () => clearInterval(interval)
+        }
+        
+    },[startCount, seconds])
+    
     
     const addOneGoalHome = ()=>{
         let addGoalEl = document.getElementById('scoreHome');
         let scoreHome = addGoalEl.innerHTML;
         ++ scoreHome;
-
         document.getElementById('scoreHome').innerHTML = scoreHome;
+        
+        setOdds((prevState) => ({...prevState, home: (prevState.home * 0.8).toFixed(2)}))
+        
     }
 
     const addOneGoalExt = ()=>{
@@ -53,8 +63,9 @@ function ViewOneFixtureData(){
         ++ scoreExt;
     
         document.getElementById('scoreExt').innerHTML = scoreExt;
-    }
 
+        setOdds((prevState) => ({...prevState, away: (prevState.away * 0.8).toFixed(2)}))
+    }
 
     if(loading){
         return (
@@ -77,10 +88,10 @@ function ViewOneFixtureData(){
                 </tr> 
                 <tr>
                     <td>
-                        <button className="btn btn-warning">{fixture.cote[0].cote}</button>
+                        <button className="btn btn-warning">{odds.home}</button>
                     </td>
                     <td>
-                        <button className="btn btn-warning">{fixture.cote[1].cote}</button>
+                        <button className="btn btn-warning">{odds.away}</button>
                     </td>
                     
                 </tr>
@@ -92,10 +103,11 @@ function ViewOneFixtureData(){
                     <td id="scoreHome">0</td>
                     <td id="scoreExt">0</td>
                     <td>
-                        <button id="counter" onClick={startCountdown} className="btn btn-primary">Start</button>
-                        <button onClick={addOneGoalHome} className="btn btn-primary m-1">Score Home +1</button>
-                        <button onClick={addOneGoalExt} className="btn btn-primary m-1">Score Exterieur +1</button>
+                        <button id="counter" onClick={() => setStartCount(true)} className="btn btn-primary">{seconds > 0 ? seconds : "Start"}</button>
+                        <button disabled={disable} id="button-home" onClick={addOneGoalHome} className="btn btn-primary m-1">Score Home +1</button>
+                        <button disabled={disable} id="button-ext" onClick={addOneGoalExt} className="btn btn-primary m-1">Score Exterieur +1</button>
                     </td>
+                    
                 </tr>
             </tbody>    
         )  
