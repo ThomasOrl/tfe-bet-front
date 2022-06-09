@@ -6,12 +6,9 @@ import ViewAllFixtures from './fixtures/ViewAllFixtures';
 function Home(){
     return(
         <div>
-            <Navbar/>
-            
+            <Navbar/>          
             <ViewAllFixtures/>
-            
-            
-            
+                        
         </div>
     )
 }
