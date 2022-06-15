@@ -8,11 +8,13 @@ function ViewOneFixture() {
   const [loading, setLoading] = useState(true);
   const [fixture, setFixture] = useState();
   const [selectedFixture, setSelectedFixture] = useState();
+  const [selectedTeam, setSelectedTeam] = useState();
   const [odds, setOdds] = useState();
   const [selectedOdds, setSelectedOdds] = useState();
   const [startCount, setStartCount] = useState(false);
   const [seconds, setSeconds] = useState(0);
-  const [disable, setDisable] = useState(true);
+  const [disableIncrement, setDisableIncrement] = useState(true);
+  const [disableOdd, setDisableOdd] = useState(false);
   const [openModale, setOpenModale] = useState(false);
 
   const { id } = useParams();
@@ -20,6 +22,7 @@ function ViewOneFixture() {
     axios.get(`/api/displayonefixture/${id}`).then((res) => {
       if (res.status === 200) {
         setFixture(res.data.fixture);
+        console.log(fixture);
         setOdds({
           home: res.data.fixture.cote[0].cote,
           away: res.data.fixture.cote[1].cote,
@@ -34,11 +37,12 @@ function ViewOneFixture() {
     if (startCount) {
       const interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
-        setDisable(false);
+        setDisableIncrement(false);
         if (seconds === 9) {
           setStartCount(false);
           setSeconds(0);
-          setDisable(true);
+          setDisableIncrement(true);
+          setDisableOdd(true);
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -115,9 +119,11 @@ function ViewOneFixture() {
                           onClick={() => {
                             setOpenModale(true);
                             setSelectedOdds(odds.home);
-                            setSelectedFixture(fixture.equipe_home.name);
+                            setSelectedTeam(fixture.equipe_home.name);
+                            setSelectedFixture(fixture.idMatchAPI);
                           }}
                           className="btn btn-warning"
+                          disabled={disableOdd}
                         >
                           {odds.home}
                         </button>
@@ -127,9 +133,11 @@ function ViewOneFixture() {
                           onClick={() => {
                             setOpenModale(true);
                             setSelectedOdds(odds.away);
-                            setSelectedFixture(fixture.equipe_exterieur.name);
+                            setSelectedTeam(fixture.equipe_exterieur.name);
+                            setSelectedFixture(fixture.idMatchAPI);
                           }}
                           className="btn btn-warning"
+                          disabled={disableOdd}
                         >
                           {odds.away}
                         </button>
@@ -151,7 +159,7 @@ function ViewOneFixture() {
                           {seconds > 0 ? seconds : "Start"}
                         </button>
                         <button
-                          disabled={disable}
+                          disabled={disableIncrement}
                           id="button-home"
                           onClick={addOneGoalHome}
                           className="btn btn-primary m-1"
@@ -159,7 +167,7 @@ function ViewOneFixture() {
                           Score Home +1
                         </button>
                         <button
-                          disabled={disable}
+                          disabled={disableIncrement}
                           id="button-ext"
                           onClick={addOneGoalExt}
                           className="btn btn-primary m-1"
@@ -180,6 +188,7 @@ function ViewOneFixture() {
             <Modale
               closeModale={setOpenModale}
               odds={selectedOdds}
+              team={selectedTeam}
               fixture={selectedFixture}
             ></Modale>
           )}
