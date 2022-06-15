@@ -36,7 +36,6 @@ function App() {
           {/* <Route path="/login" element={localStorage.getItem('auth_token') ? <Navigate to='/'/> : <Login/>} />
           
           <Route path="/register" element={localStorage.getItem('auth_token') ? <Navigate to='/'/> : <Register/>} /> */}
-
           <Route path="/profile" element={<ViewProfile />} />
           <Route path="/displayonefixture/:id" element={<ViewOneFixture />} />
         </Routes>

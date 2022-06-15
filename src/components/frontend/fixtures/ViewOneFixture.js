@@ -4,9 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import Navbar from "../../../layouts/frontend/Navbar";
 import Modale from "../modale/Modale";
 
-function ViewOneFixtureData() {
+function ViewOneFixture() {
   const [loading, setLoading] = useState(true);
   const [fixture, setFixture] = useState();
+  const [selectedFixture, setSelectedFixture] = useState();
   const [odds, setOdds] = useState();
   const [selectedOdds, setSelectedOdds] = useState();
   const [startCount, setStartCount] = useState(false);
@@ -114,6 +115,7 @@ function ViewOneFixtureData() {
                           onClick={() => {
                             setOpenModale(true);
                             setSelectedOdds(odds.home);
+                            setSelectedFixture(fixture.equipe_home.name);
                           }}
                           className="btn btn-warning"
                         >
@@ -125,6 +127,7 @@ function ViewOneFixtureData() {
                           onClick={() => {
                             setOpenModale(true);
                             setSelectedOdds(odds.away);
+                            setSelectedFixture(fixture.equipe_exterieur.name);
                           }}
                           className="btn btn-warning"
                         >
@@ -174,7 +177,11 @@ function ViewOneFixtureData() {
 
         <>
           {openModale && (
-            <Modale closeModale={setOpenModale} odds={selectedOdds}></Modale>
+            <Modale
+              closeModale={setOpenModale}
+              odds={selectedOdds}
+              fixture={selectedFixture}
+            ></Modale>
           )}
         </>
       </>
@@ -182,4 +189,4 @@ function ViewOneFixtureData() {
   }
 }
 
-export default ViewOneFixtureData;
+export default ViewOneFixture;

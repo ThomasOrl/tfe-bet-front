@@ -48,7 +48,6 @@ function ProfileData() {
   } else {
     return (
       <tr>
-        <td>{profile.id}</td>
         <td>{profile.name}</td>
         <td>{profile.email}</td>
         <td>{profile.solde}</td>
@@ -79,7 +78,6 @@ function ViewProfile() {
             <table className="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <td>id</td>
                   <td>Nom</td>
                   <td>Email</td>
                   <td>Solde</td>
