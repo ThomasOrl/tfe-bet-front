@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
-function Modale({ closeModale, odds, team, fixture }) {
+function Modale({ closeModale, odds, team, teamId, fixture }) {
   const Navigate = useNavigate();
   const modalStyle = {
     display: "block",
@@ -17,20 +17,19 @@ function Modale({ closeModale, odds, team, fixture }) {
 
   const onBetSubmit = () => {
     const dataBet = {
-      user: localStorage.getItem("auth_name"),
+      equipe: teamId,
       matchId: fixture,
-      equipe: team,
       cote: odds,
       mise: betInput,
     };
-    console.log(dataBet);
+    // console.log(dataBet);
 
     axios.post(`/api/storebet`, dataBet).then((res) => {
       if (res.data.status === 200) {
         swal("Réussi", res.data.message, "success");
         Navigate("/");
       } else {
-        swal("Echec", res.data.message, "warning");
+        swal("Echec", "erreur dans la confirmation", "warning");
       }
     });
   };
@@ -52,7 +51,9 @@ function Modale({ closeModale, odds, team, fixture }) {
               <p>Valider ma cote de</p>
               <p className="text-warning">{odds}</p>
               <p>sur {team}</p>
+              <label>Mise: </label>
               <input
+                className="m-1"
                 type="text"
                 name="mise"
                 placeholder="Entrez votre montant"

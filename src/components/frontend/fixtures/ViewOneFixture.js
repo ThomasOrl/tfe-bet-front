@@ -9,20 +9,24 @@ function ViewOneFixture() {
   const [fixture, setFixture] = useState();
   const [selectedFixture, setSelectedFixture] = useState();
   const [selectedTeam, setSelectedTeam] = useState();
+  const [selectedTeamId, setSelectedTeamId] = useState();
   const [odds, setOdds] = useState();
   const [selectedOdds, setSelectedOdds] = useState();
   const [startCount, setStartCount] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [disableIncrement, setDisableIncrement] = useState(true);
   const [disableOdd, setDisableOdd] = useState(false);
+  const [disableStart, setDisableStart] = useState(false);
   const [openModale, setOpenModale] = useState(false);
+  const [scoreExt, setScoreExt] = useState(0);
+  const [scoreHome, setScoreHome] = useState(0);
 
   const { id } = useParams();
   useEffect(() => {
     axios.get(`/api/displayonefixture/${id}`).then((res) => {
       if (res.status === 200) {
         setFixture(res.data.fixture);
-        console.log(fixture);
+        console.log(res.data.fixture);
         setOdds({
           home: res.data.fixture.cote[0].cote,
           away: res.data.fixture.cote[1].cote,
@@ -43,6 +47,7 @@ function ViewOneFixture() {
           setSeconds(0);
           setDisableIncrement(true);
           setDisableOdd(true);
+          setDisableStart(true);
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -50,11 +55,7 @@ function ViewOneFixture() {
   }, [startCount, seconds]);
 
   const addOneGoalHome = () => {
-    let addGoalEl = document.getElementById("scoreHome");
-    let scoreHome = addGoalEl.innerHTML;
-    ++scoreHome;
-    document.getElementById("scoreHome").innerHTML = scoreHome;
-
+    setScoreHome((home) => home + 1);
     setOdds((prevState) => ({
       ...prevState,
       home: (prevState.home * 0.8).toFixed(2),
@@ -62,12 +63,7 @@ function ViewOneFixture() {
   };
 
   const addOneGoalExt = () => {
-    let addGoalEl = document.getElementById("scoreExt");
-    let scoreExt = addGoalEl.innerHTML;
-    ++scoreExt;
-
-    document.getElementById("scoreExt").innerHTML = scoreExt;
-
+    setScoreExt((ext) => ext + 1);
     setOdds((prevState) => ({
       ...prevState,
       away: (prevState.away * 0.8).toFixed(2),
@@ -120,6 +116,7 @@ function ViewOneFixture() {
                             setOpenModale(true);
                             setSelectedOdds(odds.home);
                             setSelectedTeam(fixture.equipe_home.name);
+                            setSelectedTeamId(fixture.equipe_home.idEquipeAPI);
                             setSelectedFixture(fixture.idMatchAPI);
                           }}
                           className="btn btn-warning"
@@ -134,6 +131,9 @@ function ViewOneFixture() {
                             setOpenModale(true);
                             setSelectedOdds(odds.away);
                             setSelectedTeam(fixture.equipe_exterieur.name);
+                            setSelectedTeamId(
+                              fixture.equipe_exterieur.idEquipeAPI
+                            );
                             setSelectedFixture(fixture.idMatchAPI);
                           }}
                           className="btn btn-warning"
@@ -148,12 +148,13 @@ function ViewOneFixture() {
                       <td>Score Exterieur</td>
                     </tr>
                     <tr>
-                      <td id="scoreHome">0</td>
-                      <td id="scoreExt">0</td>
+                      <td>{scoreHome}</td>
+                      <td>{scoreExt}</td>
                       <td>
                         <button
                           id="counter"
                           onClick={() => setStartCount(true)}
+                          disabled={disableStart}
                           className="btn btn-success m-1"
                         >
                           {seconds > 0 ? seconds : "Start"}
@@ -189,6 +190,7 @@ function ViewOneFixture() {
               closeModale={setOpenModale}
               odds={selectedOdds}
               team={selectedTeam}
+              teamId={selectedTeamId}
               fixture={selectedFixture}
             ></Modale>
           )}
