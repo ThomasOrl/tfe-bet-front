@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../../layouts/frontend/Navbar";
 import Modale from "../modale/Modale";
+import swal from "sweetalert";
 
 function ViewOneFixture() {
   const [loading, setLoading] = useState(true);
@@ -18,15 +19,16 @@ function ViewOneFixture() {
   const [disableOdd, setDisableOdd] = useState(false);
   const [disableStart, setDisableStart] = useState(false);
   const [openModale, setOpenModale] = useState(false);
-  const [scoreExt, setScoreExt] = useState(0);
-  const [scoreHome, setScoreHome] = useState(0);
+  // const [scoreExt, setScoreExt] = useState(0);
+  // const [scoreHome, setScoreHome] = useState(0);
+  const [getScore, setGetScore] = useState({ scoreHome: 0, scoreExterieur: 0 });
 
   const { id } = useParams();
   useEffect(() => {
     axios.get(`/api/displayonefixture/${id}`).then((res) => {
       if (res.status === 200) {
         setFixture(res.data.fixture);
-        console.log(res.data.fixture);
+        // console.log(res.data.fixture);
         setOdds({
           home: res.data.fixture.cote[0].cote,
           away: res.data.fixture.cote[1].cote,
@@ -42,6 +44,13 @@ function ViewOneFixture() {
       const interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
         setDisableIncrement(false);
+        axios.get(`/api/displayonefixture/${id}`).then((res) => {
+          if (res.status === 200) {
+            setGetScore({ ...res.data.fixture });
+            console.log(res.data.fixture);
+          }
+        });
+
         if (seconds === 9) {
           setStartCount(false);
           setSeconds(0);
@@ -55,7 +64,18 @@ function ViewOneFixture() {
   }, [startCount, seconds]);
 
   const addOneGoalHome = () => {
-    setScoreHome((home) => home + 1);
+    // setGetScore((prev) => ({ ...prev, scoreHome: prev.scoreHome + 1 }));
+    const scoreHomeUpdate = {
+      scoreHome: getScore.scoreHome + 1,
+    };
+
+    axios.post(`/api/updatescorehome/${id}`, scoreHomeUpdate).then((res) => {
+      if (res.data.status === 200) {
+        swal("Réussi", res.data.message, "success");
+      } else {
+        swal("Echec", res.data.message, "warning");
+      }
+    });
     setOdds((prevState) => ({
       ...prevState,
       home: (prevState.home * 0.8).toFixed(2),
@@ -63,7 +83,20 @@ function ViewOneFixture() {
   };
 
   const addOneGoalExt = () => {
-    setScoreExt((ext) => ext + 1);
+    // setGetScore((prev) => ({...prev,scoreExterieur: prev.scoreExterieur + 1,}));
+    const scoreExterieurUpdate = {
+      scoreExterieur: getScore.scoreExterieur + 1,
+    };
+
+    axios
+      .post(`/api/updatescoreexterieur/${id}`, scoreExterieurUpdate)
+      .then((res) => {
+        if (res.data.status === 200) {
+          swal("Réussi", res.data.message, "success");
+        } else {
+          swal("Echec", res.data.message, "warning");
+        }
+      });
     setOdds((prevState) => ({
       ...prevState,
       away: (prevState.away * 0.8).toFixed(2),
@@ -148,8 +181,8 @@ function ViewOneFixture() {
                       <td>Score Exterieur</td>
                     </tr>
                     <tr>
-                      <td>{scoreHome}</td>
-                      <td>{scoreExt}</td>
+                      <td>{getScore.scoreHome || "0"}</td>
+                      <td>{getScore.scoreExterieur || "0"}</td>
                       <td>
                         <button
                           id="counter"
@@ -162,7 +195,8 @@ function ViewOneFixture() {
                         <button
                           disabled={disableIncrement}
                           id="button-home"
-                          onClick={addOneGoalHome}
+                          // onClick={addOneGoalHome}
+                          onClick={() => addOneGoalHome()}
                           className="btn btn-primary m-1"
                         >
                           Score Home +1
@@ -170,7 +204,8 @@ function ViewOneFixture() {
                         <button
                           disabled={disableIncrement}
                           id="button-ext"
-                          onClick={addOneGoalExt}
+                          // onClick={addOneGoalExt}
+                          onClick={() => addOneGoalExt()}
                           className="btn btn-primary m-1"
                         >
                           Score Exterieur +1

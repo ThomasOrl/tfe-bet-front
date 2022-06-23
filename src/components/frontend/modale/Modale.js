@@ -9,9 +9,6 @@ function Modale({ closeModale, odds, team, teamId, fixture }) {
     display: "block",
     backgroundColor: "rgba(0,0,0,0.8)",
   };
-  // console.log(odds);
-  // console.log(team);
-  // console.log(fixture);
 
   const [betInput, setBetInput] = useState("");
 
@@ -29,7 +26,7 @@ function Modale({ closeModale, odds, team, teamId, fixture }) {
         swal("Réussi", res.data.message, "success");
         Navigate("/");
       } else {
-        swal("Echec", "erreur dans la confirmation", "warning");
+        swal("Echec", res.data.message, "warning");
       }
     });
   };
