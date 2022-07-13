@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "../../../layouts/frontend/Navbar";
 import Modale from "../modale/Modale";
 import swal from "sweetalert";
+import Footer from "../../../layouts/frontend/Footer";
 
 function ViewOneFixture() {
   const [loading, setLoading] = useState(true);
@@ -47,7 +48,7 @@ function ViewOneFixture() {
         axios.get(`/api/displayonefixture/${id}`).then((res) => {
           if (res.status === 200) {
             setGetScore({ ...res.data.fixture });
-            console.log(res.data.fixture);
+            // console.log(res.data.fixture);
           }
         });
 
@@ -217,6 +218,7 @@ function ViewOneFixture() {
               </div>
             </div>
           </div>
+          <Footer/>
         </div>
 
         <>

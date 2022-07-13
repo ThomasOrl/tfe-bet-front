@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../../../layouts/frontend/Footer";
 
 function ViewAllFixtures() {
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,9 @@ function ViewAllFixtures() {
             </table>
           </div>
         </div>
+      </div>
+      <div className="footerHome">
+        <Footer />
       </div>
     </div>
   );
