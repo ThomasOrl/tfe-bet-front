@@ -20,8 +20,6 @@ function ViewOneFixture() {
   const [disableOdd, setDisableOdd] = useState(false);
   const [disableStart, setDisableStart] = useState(false);
   const [openModale, setOpenModale] = useState(false);
-  // const [scoreExt, setScoreExt] = useState(0);
-  // const [scoreHome, setScoreHome] = useState(0);
   const [getScore, setGetScore] = useState({ scoreHome: 0, scoreExterieur: 0 });
 
   const { id } = useParams();
@@ -29,7 +27,7 @@ function ViewOneFixture() {
     axios.get(`/api/displayonefixture/${id}`).then((res) => {
       if (res.status === 200) {
         setFixture(res.data.fixture);
-        // console.log(res.data.fixture);
+        console.log(res.data.fixture);
         setOdds({
           home: res.data.fixture.cote[0].cote,
           away: res.data.fixture.cote[1].cote,
@@ -52,12 +50,18 @@ function ViewOneFixture() {
           }
         });
 
-        if (seconds === 9) {
+        if (seconds === 15) {
           setStartCount(false);
           setSeconds(0);
           setDisableIncrement(true);
           setDisableOdd(true);
           setDisableStart(true);
+          axios.post(`/api/validateMatch/${id}`).then((res) => {
+            console.log(res);
+          });
+          axios.post(`/api/deleteMatch/${id}`).then((res) => {
+            console.log(res);
+          });
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -65,7 +69,6 @@ function ViewOneFixture() {
   }, [startCount, seconds]);
 
   const addOneGoalHome = () => {
-    // setGetScore((prev) => ({ ...prev, scoreHome: prev.scoreHome + 1 }));
     const scoreHomeUpdate = {
       scoreHome: getScore.scoreHome + 1,
     };
@@ -84,7 +87,6 @@ function ViewOneFixture() {
   };
 
   const addOneGoalExt = () => {
-    // setGetScore((prev) => ({...prev,scoreExterieur: prev.scoreExterieur + 1,}));
     const scoreExterieurUpdate = {
       scoreExterieur: getScore.scoreExterieur + 1,
     };
@@ -196,7 +198,6 @@ function ViewOneFixture() {
                         <button
                           disabled={disableIncrement}
                           id="button-home"
-                          // onClick={addOneGoalHome}
                           onClick={() => addOneGoalHome()}
                           className="btn btn-primary m-1"
                         >
@@ -205,7 +206,6 @@ function ViewOneFixture() {
                         <button
                           disabled={disableIncrement}
                           id="button-ext"
-                          // onClick={addOneGoalExt}
                           onClick={() => addOneGoalExt()}
                           className="btn btn-primary m-1"
                         >
@@ -218,7 +218,7 @@ function ViewOneFixture() {
               </div>
             </div>
           </div>
-          <Footer/>
+          <Footer />
         </div>
 
         <>

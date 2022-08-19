@@ -24,6 +24,11 @@ function ViewAllFixtures() {
     viewallfixture_HTMLTABLE = fixturelist.map((item) => {
       return (
         <tr key={item.id}>
+          <td className="fw-bolder">{item.equipe_home.name}</td>
+
+          <td className="fw-bolder">{item.equipe_exterieur.name}</td>
+
+          <td>{item.dateDebut}</td>
           <td>
             <Link
               to={`displayonefixture/${item.id}`}
@@ -32,11 +37,6 @@ function ViewAllFixtures() {
               Voir ce Match
             </Link>
           </td>
-          <td>{item.equipe_home.name}</td>
-
-          <td>{item.equipe_exterieur.name}</td>
-
-          <td>{item.dateDebut}</td>
         </tr>
       );
     });

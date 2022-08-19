@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import swal from "sweetalert";
 import Navbar from "../../../layouts/frontend/Navbar";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../../layouts/frontend/Footer";
 
 function ViewProfile() {
   const [loading, setLoading] = useState(true);
@@ -78,6 +79,9 @@ function ViewProfile() {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <Footer />
         </div>
       </div>
     );
