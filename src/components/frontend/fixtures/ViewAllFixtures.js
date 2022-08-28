@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../../layouts/frontend/Footer";
+import dayjs from "dayjs";
 
 function ViewAllFixtures() {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ function ViewAllFixtures() {
 
           <td className="fw-bolder">{item.equipe_exterieur.name}</td>
 
-          <td>{item.dateDebut}</td>
+          <td>{dayjs(item.dateDebut).format("dddd, MMMM D YYYY")}</td>
           <td>
             <Link
               to={`displayonefixture/${item.id}`}

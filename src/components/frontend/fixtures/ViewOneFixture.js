@@ -50,7 +50,7 @@ function ViewOneFixture() {
           }
         });
 
-        if (seconds === 15) {
+        if (seconds === 30) {
           setStartCount(false);
           setSeconds(0);
           setDisableIncrement(true);
@@ -82,7 +82,7 @@ function ViewOneFixture() {
     });
     setOdds((prevState) => ({
       ...prevState,
-      home: (prevState.home * 0.8).toFixed(2),
+      home: (prevState.home * 0.9).toFixed(2),
     }));
   };
 
@@ -102,7 +102,7 @@ function ViewOneFixture() {
       });
     setOdds((prevState) => ({
       ...prevState,
-      away: (prevState.away * 0.8).toFixed(2),
+      away: (prevState.away * 0.9).toFixed(2),
     }));
   };
 
