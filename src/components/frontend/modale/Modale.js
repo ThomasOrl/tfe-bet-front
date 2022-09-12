@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
 function Modale({ closeModale, odds, team, teamId, fixture }) {
-  const Navigate = useNavigate();
+  // const Navigate = useNavigate();
   const modalStyle = {
     display: "block",
     backgroundColor: "rgba(0,0,0,0.8)",
@@ -19,12 +19,11 @@ function Modale({ closeModale, odds, team, teamId, fixture }) {
       cote: odds,
       mise: betInput,
     };
-    // console.log(dataBet);
 
     axios.post(`/api/storebet`, dataBet).then((res) => {
       if (res.data.status === 200) {
         swal("Réussi", res.data.message, "success");
-        Navigate("/");
+        // Navigate("/");
       } else {
         swal("Echec", res.data.message, "warning");
       }

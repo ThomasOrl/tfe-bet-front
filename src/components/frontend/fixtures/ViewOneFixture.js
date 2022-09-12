@@ -50,7 +50,7 @@ function ViewOneFixture() {
           }
         });
 
-        if (seconds === 30) {
+        if (seconds === 45) {
           setStartCount(false);
           setSeconds(0);
           setDisableIncrement(true);
